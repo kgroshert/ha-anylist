@@ -16,8 +16,8 @@ import voluptuous as vol
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
 
-from custom_components.anylist import async_setup
-from custom_components.anylist import client as client_module
+from custom_components.anylistpy import async_setup
+from custom_components.anylistpy import client as client_module
 
 from .test_client import _client, _recipes_user_data
 from .test_integration import _attach_runtime, _mock_entry
@@ -245,7 +245,7 @@ async def test_create_service_with_optional_image(
     if image_url:
         data["image_url"] = image_url
     result = await hass.services.async_call(
-        "anylist", "create_recipe", data, blocking=True, return_response=True
+        "anylistpy", "create_recipe", data, blocking=True, return_response=True
     )
     expected = ["https://photos.anylist.com/uploaded-photo.jpg"] if image_url else []
     assert result["recipe"]["photo_urls"] == expected
@@ -273,7 +273,7 @@ async def test_image_failure_prevents_recipe_creation(
     assert await async_setup(hass, {})
     with pytest.raises(HomeAssistantError) as exc:
         await hass.services.async_call(
-            "anylist",
+            "anylistpy",
             "create_recipe",
             {
                 "name": "Soup",
@@ -299,7 +299,7 @@ async def test_create_service_rejects_invalid_image_url(
     assert await async_setup(hass, {})
     with pytest.raises(vol.Invalid):
         await hass.services.async_call(
-            "anylist",
+            "anylistpy",
             "create_recipe",
             {
                 "name": "Soup",
@@ -386,7 +386,7 @@ async def test_update_service_with_optional_image(
     if image_url:
         data["image_url"] = image_url
     result = await hass.services.async_call(
-        "anylist", "update_recipe", data, blocking=True, return_response=True
+        "anylistpy", "update_recipe", data, blocking=True, return_response=True
     )
     expected = (
         ["https://photos.anylist.com/uploaded-photo.jpg"]
@@ -424,7 +424,7 @@ async def test_update_image_failure_leaves_recipe_unchanged(
     assert await async_setup(hass, {})
     with pytest.raises(HomeAssistantError) as exc:
         await hass.services.async_call(
-            "anylist",
+            "anylistpy",
             "update_recipe",
             {
                 "recipe_id": "recipe-1",
@@ -452,7 +452,7 @@ async def test_update_service_rejects_invalid_image_url(
     assert await async_setup(hass, {})
     with pytest.raises(vol.Invalid):
         await hass.services.async_call(
-            "anylist",
+            "anylistpy",
             "update_recipe",
             {
                 "recipe_id": "recipe-1",

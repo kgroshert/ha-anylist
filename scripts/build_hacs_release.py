@@ -12,8 +12,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TAG_PATTERN = re.compile(r"v\d+\.\d+\.\d+")
-DOMAIN = "anylist"
-ASSET_NAME = "anylist.zip"
+DOMAIN = "anylistpy"
+ASSET_NAME = "anylistpy.zip"
 
 
 def build(tag: str, output_dir: Path) -> Path:

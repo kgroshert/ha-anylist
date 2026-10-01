@@ -26,7 +26,7 @@ Describe the testing you performed.
 - [ ] HACS Action passes.
 - [ ] Hassfest passes.
 - [ ] Home Assistant loads or restarts without relevant errors.
-- [ ] The `anylist` integration can be set up or reloaded when affected.
+- [ ] The `anylistpy` integration can be set up or reloaded when affected.
 - [ ] Relevant actions, entities, or UI flows were tested.
 - [ ] Documentation-only change; no runtime testing needed.
 

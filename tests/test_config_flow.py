@@ -12,8 +12,8 @@ from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType, InvalidData
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.anylist.client import AnyListAuthError, AnyListHTTPError
-from custom_components.anylist.const import (
+from custom_components.anylistpy.client import AnyListAuthError, AnyListHTTPError
+from custom_components.anylistpy.const import (
     ANYLIST_DEFAULT_POLL_INTERVAL,
     CONF_MEAL_PLAN_CALENDAR,
     CONF_POLL_INTERVAL,
@@ -41,7 +41,7 @@ async def test_user_flow_success(hass: HomeAssistant, poll_interval: int | None)
     )
 
     with patch(
-        "custom_components.anylist.config_flow.AnyListClient.login",
+        "custom_components.anylistpy.config_flow.AnyListClient.login",
         return_value=client,
     ):
         result = await hass.config_entries.flow.async_init(
@@ -88,7 +88,7 @@ async def test_user_flow_auth_error_recovers(hass: HomeAssistant) -> None:
     client = FakeAnyListClient()
 
     with patch(
-        "custom_components.anylist.config_flow.AnyListClient.login",
+        "custom_components.anylistpy.config_flow.AnyListClient.login",
         side_effect=[AnyListAuthError("bad auth"), client],
     ):
         result = await hass.config_entries.flow.async_init(
@@ -117,7 +117,7 @@ async def test_user_flow_connection_error_recovers(hass: HomeAssistant) -> None:
     client = FakeAnyListClient()
 
     with patch(
-        "custom_components.anylist.config_flow.AnyListClient.login",
+        "custom_components.anylistpy.config_flow.AnyListClient.login",
         side_effect=[AnyListHTTPError(500, "server error"), client],
     ):
         result = await hass.config_entries.flow.async_init(
@@ -151,7 +151,7 @@ async def test_user_flow_aborts_unique_account(hass: HomeAssistant) -> None:
     entry.add_to_hass(hass)
 
     with patch(
-        "custom_components.anylist.config_flow.AnyListClient.login",
+        "custom_components.anylistpy.config_flow.AnyListClient.login",
         return_value=FakeAnyListClient(user_id="user-1"),
     ):
         result = await hass.config_entries.flow.async_init(
@@ -317,7 +317,7 @@ async def test_reauth_flow_success(hass: HomeAssistant) -> None:
     entry.add_to_hass(hass)
 
     with patch(
-        "custom_components.anylist.config_flow.AnyListClient.login",
+        "custom_components.anylistpy.config_flow.AnyListClient.login",
         return_value=FakeAnyListClient(user_id="user-1"),
     ):
         result = await hass.config_entries.flow.async_init(
@@ -348,7 +348,7 @@ async def test_reauth_flow_reports_errors(hass: HomeAssistant) -> None:
     entry.add_to_hass(hass)
 
     with patch(
-        "custom_components.anylist.config_flow.AnyListClient.login",
+        "custom_components.anylistpy.config_flow.AnyListClient.login",
         side_effect=[
             AnyListAuthError("bad auth"),
             AnyListHTTPError(500, "server error"),
@@ -386,7 +386,7 @@ async def test_reconfigure_flow_success(hass: HomeAssistant) -> None:
     }
 
     with patch(
-        "custom_components.anylist.config_flow.AnyListClient.login",
+        "custom_components.anylistpy.config_flow.AnyListClient.login",
         return_value=FakeAnyListClient(user_id="user-1"),
     ):
         result = await hass.config_entries.flow.async_init(
@@ -416,7 +416,7 @@ async def test_reconfigure_flow_auth_error(hass: HomeAssistant) -> None:
     entry.add_to_hass(hass)
 
     with patch(
-        "custom_components.anylist.config_flow.AnyListClient.login",
+        "custom_components.anylistpy.config_flow.AnyListClient.login",
         side_effect=AnyListAuthError("bad auth"),
     ):
         result = await hass.config_entries.flow.async_init(
@@ -443,7 +443,7 @@ async def test_reconfigure_flow_connection_error(hass: HomeAssistant) -> None:
     entry.add_to_hass(hass)
 
     with patch(
-        "custom_components.anylist.config_flow.AnyListClient.login",
+        "custom_components.anylistpy.config_flow.AnyListClient.login",
         side_effect=AnyListHTTPError(500, "server error"),
     ):
         result = await hass.config_entries.flow.async_init(

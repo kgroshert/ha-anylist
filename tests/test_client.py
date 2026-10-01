@@ -10,7 +10,7 @@ from urllib import error as urlerror
 
 import pytest
 
-from custom_components.anylist import client as client_module
+from custom_components.anylistpy import client as client_module
 
 
 def _client() -> client_module.AnyListClient:

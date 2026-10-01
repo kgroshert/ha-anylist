@@ -1,6 +1,6 @@
 {
-  "domain": "anylist",
-  "name": "AnyList",
+  "domain": "anylistpy",
+  "name": "AnyList (Python)",
   "codeowners": ["@moryoav"],
   "config_flow": true,
   "documentation": "https://github.com/moryoav/ha-anylist",

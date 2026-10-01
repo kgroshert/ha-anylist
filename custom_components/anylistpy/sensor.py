@@ -43,6 +43,6 @@ class AnyListICalendarURLSensor(SensorEntity):
             entry_type=DeviceEntryType.SERVICE,
             identifiers={(DOMAIN, entry.entry_id)},
             manufacturer="Purple Cover, Inc.",
-            name="AnyList",
+            name="AnyList PY",
             configuration_url="https://www.anylist.com/",
         )

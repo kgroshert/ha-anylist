@@ -9,9 +9,9 @@ import voluptuous as vol
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
 
-from custom_components.anylist import async_setup
-from custom_components.anylist.client import AnyListError, AnyListTimeoutError
-from custom_components.anylist.recipe_search import search_recipes
+from custom_components.anylistpy import async_setup
+from custom_components.anylistpy.client import AnyListError, AnyListTimeoutError
+from custom_components.anylistpy.recipe_search import search_recipes
 
 from .conftest import FakeRecipe
 from .test_integration import _attach_runtime, _mock_entry
@@ -161,7 +161,7 @@ async def _setup(hass):
 
 async def _call(hass, data, action="search_recipes"):
     return await hass.services.async_call(
-        "anylist", action, data, blocking=True, return_response=True
+        "anylistpy", action, data, blocking=True, return_response=True
     )
 
 

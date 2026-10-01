@@ -17,7 +17,7 @@ from homeassistant.helpers.device_registry import DeviceEntryType
 from homeassistant.helpers.update_coordinator import UpdateFailed
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.anylist import (
+from custom_components.anylistpy import (
     AnyListRuntimeData,
     _async_refresh_entry,
     async_migrate_entry,
@@ -25,8 +25,8 @@ from custom_components.anylist import (
     async_setup_entry,
     get_poll_interval,
 )
-from custom_components.anylist.client import AnyListAuthError, AnyListError
-from custom_components.anylist.const import (
+from custom_components.anylistpy.client import AnyListAuthError, AnyListError
+from custom_components.anylistpy.const import (
     ANYLIST_DEFAULT_POLL_INTERVAL,
     ANYLIST_MAX_POLL_INTERVAL,
     ANYLIST_MIN_POLL_INTERVAL,
@@ -52,9 +52,9 @@ from custom_components.anylist.const import (
     SERVICE_REFRESH,
     SERVICE_UPDATE_RECIPE,
 )
-from custom_components.anylist.diagnostics import async_get_config_entry_diagnostics
-from custom_components.anylist.sensor import AnyListICalendarURLSensor
-from custom_components.anylist.todo import AnyListTodoEntity, async_setup_entry as async_setup_todo_entry
+from custom_components.anylistpy.diagnostics import async_get_config_entry_diagnostics
+from custom_components.anylistpy.sensor import AnyListICalendarURLSensor
+from custom_components.anylistpy.todo import AnyListTodoEntity, async_setup_entry as async_setup_todo_entry
 
 from .conftest import (
     FakeAnyListClient,
@@ -120,7 +120,7 @@ async def test_setup_entry_creates_todo_entity_and_unloads(
     client = FakeAnyListClient(lists=[fake_list("list-1", "Groceries")])
 
     with patch(
-        "custom_components.anylist.AnyListClient.login",
+        "custom_components.anylistpy.AnyListClient.login",
         return_value=client,
     ):
         assert await hass.config_entries.async_setup(entry.entry_id)
@@ -152,7 +152,7 @@ async def test_setup_entry_uses_configured_poll_interval(
     client = FakeAnyListClient(lists=[fake_list("list-1", "Groceries")])
 
     with patch(
-        "custom_components.anylist.AnyListClient.login",
+        "custom_components.anylistpy.AnyListClient.login",
         return_value=client,
     ):
         assert await hass.config_entries.async_setup(entry.entry_id)
@@ -168,7 +168,7 @@ async def test_setup_entry_defaults_poll_interval(hass: HomeAssistant) -> None:
     client = FakeAnyListClient(lists=[fake_list("list-1", "Groceries")])
 
     with patch(
-        "custom_components.anylist.AnyListClient.login",
+        "custom_components.anylistpy.AnyListClient.login",
         return_value=client,
     ):
         assert await hass.config_entries.async_setup(entry.entry_id)
@@ -208,7 +208,7 @@ async def test_poll_interval_options_reload_and_refresh(hass: HomeAssistant) -> 
     entry.add_to_hass(hass)
     client = FakeAnyListClient(lists=[fake_list("list-1", "Groceries")])
 
-    with patch("custom_components.anylist.AnyListClient.login", return_value=client):
+    with patch("custom_components.anylistpy.AnyListClient.login", return_value=client):
         assert await hass.config_entries.async_setup(entry.entry_id)
         await hass.async_block_till_done()
         original_coordinator = entry.runtime_data.coordinator
@@ -250,7 +250,7 @@ async def test_setup_entry_raises_auth_failed(hass: HomeAssistant) -> None:
     entry = _mock_entry()
 
     with patch(
-        "custom_components.anylist.AnyListClient.login",
+        "custom_components.anylistpy.AnyListClient.login",
         side_effect=AnyListAuthError("bad auth"),
     ), pytest.raises(ConfigEntryAuthFailed):
         await async_setup_entry(hass, entry)
@@ -261,7 +261,7 @@ async def test_setup_entry_raises_not_ready(hass: HomeAssistant) -> None:
     entry = _mock_entry()
 
     with patch(
-        "custom_components.anylist.AnyListClient.login",
+        "custom_components.anylistpy.AnyListClient.login",
         side_effect=AnyListError("offline"),
     ), pytest.raises(ConfigEntryNotReady):
         await async_setup_entry(hass, entry)
@@ -278,7 +278,7 @@ async def test_setup_entry_enables_meal_plan_sensor(
     client = FakeAnyListClient(lists=[fake_list("list-1", "Groceries")])
 
     with patch(
-        "custom_components.anylist.AnyListClient.login",
+        "custom_components.anylistpy.AnyListClient.login",
         return_value=client,
     ):
         assert await hass.config_entries.async_setup(entry.entry_id)
@@ -827,7 +827,7 @@ async def test_fetch_data_auth_failure_raises_reauth(
     hass: HomeAssistant,
 ) -> None:
     """Test coordinator fetch converts auth failures to reauth errors."""
-    from custom_components.anylist import _async_fetch_data
+    from custom_components.anylistpy import _async_fetch_data
 
     client = SimpleNamespace(
         get_lists=lambda: (_ for _ in ()).throw(AnyListAuthError("bad auth")),
@@ -841,8 +841,8 @@ async def test_fetch_data_timeout_raises_update_failed(
     hass: HomeAssistant,
 ) -> None:
     """Test coordinator fetch converts controlled errors to UpdateFailed."""
-    from custom_components.anylist import _async_fetch_data
-    from custom_components.anylist.client import AnyListTimeoutError
+    from custom_components.anylistpy import _async_fetch_data
+    from custom_components.anylistpy.client import AnyListTimeoutError
 
     client = SimpleNamespace(
         get_lists=lambda: (_ for _ in ()).throw(AnyListTimeoutError("timeout")),

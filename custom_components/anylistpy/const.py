@@ -1,6 +1,6 @@
 """Constants for the AnyList integration."""
 
-DOMAIN = "anylist"
+DOMAIN = "anylistpy"
 
 CONF_EMAIL = "email"
 CONF_PASSWORD = "password"

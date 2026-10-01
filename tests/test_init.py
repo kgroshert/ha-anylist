@@ -8,12 +8,12 @@ def test_const_values():
     """Test that constants have expected values."""
     # Load const.py directly to avoid homeassistant dependency
     spec = importlib.util.spec_from_file_location(
-        "const", "custom_components/anylist/const.py"
+        "const", "custom_components/anylistpy/const.py"
     )
     const = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(const)
 
-    assert const.DOMAIN == "anylist"
+    assert const.DOMAIN == "anylistpy"
     assert const.CONF_EMAIL == "email"
     assert const.CONF_PASSWORD == "password"
     assert const.CONF_MEAL_PLAN_CALENDAR == "meal_plan_calendar"
@@ -37,7 +37,7 @@ def test_const_values():
 def _load_client_module():
     """Load client.py directly to avoid homeassistant dependency."""
     spec = importlib.util.spec_from_file_location(
-        "client", "custom_components/anylist/client.py"
+        "client", "custom_components/anylistpy/client.py"
     )
     client = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = client
@@ -48,7 +48,7 @@ def _load_client_module():
 def _load_category_module():
     """Load category.py directly to avoid homeassistant dependency."""
     spec = importlib.util.spec_from_file_location(
-        "category", "custom_components/anylist/category.py"
+        "category", "custom_components/anylistpy/category.py"
     )
     category = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = category

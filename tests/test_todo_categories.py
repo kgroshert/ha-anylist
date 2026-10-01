@@ -6,8 +6,8 @@ from types import SimpleNamespace
 
 import pytest
 
-from custom_components.anylist import client as client_module
-from custom_components.anylist.todo import AnyListTodoEntity
+from custom_components.anylistpy import client as client_module
+from custom_components.anylistpy.todo import AnyListTodoEntity
 
 
 @pytest.fixture

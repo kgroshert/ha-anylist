@@ -104,7 +104,7 @@ class AnyListTodoEntity(CoordinatorEntity, TodoListEntity):
             entry_type=DeviceEntryType.SERVICE,
             identifiers={(DOMAIN, config_entry.entry_id)},
             manufacturer="Purple Cover, Inc.",
-            name="AnyList",
+            name="AnyList PY",
             configuration_url="https://www.anylist.com/",
         )
 
